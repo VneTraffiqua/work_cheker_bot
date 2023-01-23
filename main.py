@@ -3,6 +3,7 @@ import requests
 import telegram
 import os
 from dotenv import load_dotenv
+from textwrap import dedent
 
 
 def get_lesson_verification(timestamp):
@@ -30,19 +31,24 @@ def main():
             if dvmn_request['status'] == 'found':
                 timestamp = dvmn_request['last_attempt_timestamp']
                 if dvmn_request['new_attempts'][0]['is_negative']:
+                    text = f'''
+                        Преподаватель проверил работу!
+                        К сожалению, в работе нашлись ошибки!
+                        {dvmn_request["new_attempts"][0]["lesson_url"]}
+                        '''
+
                     bot.send_message(
                         chat_id=os.getenv('TG_CHAT_ID'),
-                        text=f'Преподаватель проверил работу! '
-                             f'К сожалению, в работе нашлись ошибки! \n'
-                             f'{dvmn_request["new_attempts"][0]["lesson_url"]}'
+                        text=dedent(text)
                     )
                 else:
+                    text = f'''Преподаватель проверил работу!
+                    Преподавателю все понравилось!
+                    {dvmn_request["new_attempts"][0]["lesson_url"]}
+                    '''
                     bot.send_message(
                         chat_id=os.getenv('CHAT_ID'),
-                        text=f'Преподаватель проверил работу! '
-                             f'Преподавателю все понравилось! '
-                             f'Можете приступать к следующему уроку. \n'
-                             f'{dvmn_request["new_attempts"][0]["lesson_url"]}'
+                        text=dedent(text)
                     )
             elif dvmn_request['status'] == 'timeout':
                 timestamp = dvmn_request['timestamp_to_request']
