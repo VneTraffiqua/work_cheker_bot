@@ -25,21 +25,16 @@ def main():
     )
     timestamp = time.time()
     dvmn_request = get_lesson_verification(timestamp)
-    # if dvmn_request['status'] == 'found':
-    #     bot.send_message(
-    #         chat_id=709161558,
-    #         text="Преподаватель проверил работу!"
-    #     )
     while True:
         try:
             if dvmn_request['status'] == 'found':
                 timestamp = dvmn_request['last_attempt_timestamp']
                 if dvmn_request['new_attempts'][0]['is_negative']:
                     bot.send_message(
-                        chat_id=os.getenv('CHAT_ID'),
+                        chat_id=os.getenv('TG_CHAT_ID'),
                         text=f'Преподаватель проверил работу! '
                              f'К сожалению, в работе нашлись ошибки! \n'
-                             f' {dvmn_request["new_attempts"][0]["lesson_url"]}'
+                             f'{dvmn_request["new_attempts"][0]["lesson_url"]}'
                     )
                 else:
                     bot.send_message(
@@ -47,7 +42,7 @@ def main():
                         text=f'Преподаватель проверил работу! '
                              f'Преподавателю все понравилось! '
                              f'Можете приступать к следующему уроку. \n'
-                             f' {dvmn_request["new_attempts"][0]["lesson_url"]}'
+                             f'{dvmn_request["new_attempts"][0]["lesson_url"]}'
                     )
             elif dvmn_request['status'] == 'timeout':
                 timestamp = dvmn_request['timestamp_to_request']
