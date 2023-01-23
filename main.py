@@ -6,27 +6,23 @@ from dotenv import load_dotenv
 from textwrap import dedent
 
 
-def get_lesson_verification(timestamp):
-    url = 'https://dvmn.org/api/long_polling/'
-    headers = {
-        'Authorization': f'Token {os.getenv("DVMN_TOKEN")}'
-    }
-    params = {
-        'timestamp': timestamp
-    }
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
-
-
 def main():
     load_dotenv()
     bot = telegram.Bot(
         token=os.getenv('TELEGRAM_TOKEN')
     )
     timestamp = time.time()
-    dvmn_request = get_lesson_verification(timestamp)
     while True:
+        url = 'https://dvmn.org/api/long_polling/'
+        headers = {
+            'Authorization': f'Token {os.getenv("DVMN_TOKEN")}'
+        }
+        params = {
+            'timestamp': timestamp
+        }
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        dvmn_request = response.json()
         try:
             if dvmn_request['status'] == 'found':
                 timestamp = dvmn_request['last_attempt_timestamp']
@@ -52,7 +48,6 @@ def main():
                     )
             elif dvmn_request['status'] == 'timeout':
                 timestamp = dvmn_request['timestamp_to_request']
-            dvmn_request = get_lesson_verification(timestamp)
         except requests.exceptions.HTTPError:
             continue
         except requests.exceptions.ConnectionError:
