@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 def get_lesson_verification(timestamp):
     url = 'https://dvmn.org/api/long_polling/'
     headers = {
-        'Authorization': 'Token 4985f388872e349d1d34ca76e8d9328665a9cf28'
+        'Authorization': f'Token {os.getenv("DVMN_TOKEN")}'
     }
     params = {
         'timestamp': timestamp

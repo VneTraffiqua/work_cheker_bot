@@ -14,6 +14,7 @@ Recommended to use [virtualenv/venv](https://docs.python.org/3/library/venv.html
 ## Launch.
 
 #### Added to `.env` file:
+    'DVMN_TOKEN' - Devman token to work with the API
     `TELEGRAM_TOKEN` - telegram token to work with the API
     `TG_CHAT_ID` - ID of your chat. It can be obtained by sending a message to the @userinfobot bot
 
