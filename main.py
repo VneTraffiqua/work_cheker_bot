@@ -43,7 +43,7 @@ def main():
                     {dvmn_request["new_attempts"][0]["lesson_url"]}
                     '''
                     bot.send_message(
-                        chat_id=os.getenv('CHAT_ID'),
+                        chat_id=os.getenv('TG_CHAT_ID'),
                         text=dedent(text)
                     )
             elif dvmn_request['status'] == 'timeout':
