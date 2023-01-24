@@ -22,15 +22,15 @@ def main():
         }
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
-        dvmn_request = response.json()
+        checking_result = response.json()
         try:
-            if dvmn_request['status'] == 'found':
-                timestamp = dvmn_request['last_attempt_timestamp']
-                if dvmn_request['new_attempts'][0]['is_negative']:
+            if checking_result['status'] == 'found':
+                timestamp = checking_result['last_attempt_timestamp']
+                if checking_result['new_attempts'][0]['is_negative']:
                     text = f'''
                         Преподаватель проверил работу!
                         К сожалению, в работе нашлись ошибки!
-                        {dvmn_request["new_attempts"][0]["lesson_url"]}
+                        {checking_result["new_attempts"][0]["lesson_url"]}
                         '''
 
                     bot.send_message(
@@ -40,14 +40,14 @@ def main():
                 else:
                     text = f'''Преподаватель проверил работу!
                     Преподавателю все понравилось!
-                    {dvmn_request["new_attempts"][0]["lesson_url"]}
+                    {checking_result["new_attempts"][0]["lesson_url"]}
                     '''
                     bot.send_message(
                         chat_id=os.getenv('TG_CHAT_ID'),
                         text=dedent(text)
                     )
-            elif dvmn_request['status'] == 'timeout':
-                timestamp = dvmn_request['timestamp_to_request']
+            elif checking_result['status'] == 'timeout':
+                timestamp = checking_result['timestamp_to_request']
         except requests.exceptions.HTTPError:
             continue
         except requests.exceptions.ConnectionError:
