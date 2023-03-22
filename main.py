@@ -12,13 +12,14 @@ def main():
     timestamp = time.time()
     load_dotenv()
     tg_token = os.getenv('TELEGRAM_TOKEN')
+    tg_logger_token = os.getenv('TELEGRAM_LOGGER_TOKEN')
     tg_chat_id = os.getenv('TG_CHAT_ID')
     bot = telegram.Bot(
         token=tg_token
     )
     logger = logging.getLogger('TgLogger')
     logger.setLevel(logging.DEBUG)
-    logger.addHandler(LogsHandler(tg_token, tg_chat_id))
+    logger.addHandler(LogsHandler(tg_logger_token, tg_chat_id))
     logger.debug('Бот запущен')
     while True:
         try:
