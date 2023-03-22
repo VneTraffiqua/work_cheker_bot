@@ -32,7 +32,6 @@ def main():
             response = requests.get(url, headers=headers, params=params)
             response.raise_for_status()
             checking_result = response.json()
-            logger.debug('Бот вновь запущен')
             if checking_result['status'] == 'found':
                 timestamp = checking_result['last_attempt_timestamp']
                 if checking_result['new_attempts'][0]['is_negative']:
