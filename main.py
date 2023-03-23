@@ -8,6 +8,9 @@ import logging
 from hendlers import LogsHandler
 
 
+logger = logging.getLogger('TgLogger')
+
+
 def main():
     timestamp = time.time()
     load_dotenv()
@@ -17,7 +20,6 @@ def main():
     bot = telegram.Bot(
         token=tg_token
     )
-    logger = logging.getLogger('TgLogger')
     logger.setLevel(logging.DEBUG)
     logger.addHandler(LogsHandler(tg_logger_token, tg_chat_id))
     logger.debug('Бот запущен')
@@ -57,11 +59,10 @@ def main():
                     )
             elif checking_result['status'] == 'timeout':
                 timestamp = checking_result['timestamp_to_request']
-        except Exception as err:
-            bot.send_message(
-                chat_id=tg_chat_id,
-                text='Бот упал с ошибкой:'
-            )
+        except requests.exceptions.HTTPError:
+            continue
+        except requests.exceptions.ConnectionError as err:
+            logger.debug('Бот упал с ошибкой')
             logger.exception(err)
             time.sleep(3)
             continue
