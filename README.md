@@ -24,4 +24,15 @@ Recommended to use [virtualenv/venv](https://docs.python.org/3/library/venv.html
 python main.py
 ```
 
+## Build Using Docker
+
+1. Build the image
+
+`docker build -t work_cheker_bot .`
+
+
+2. Create the container and run:
+
+`docker run -dit work_cheker_bot `
+
 
