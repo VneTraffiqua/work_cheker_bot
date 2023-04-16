@@ -18,6 +18,15 @@ Recommended to use [virtualenv/venv](https://docs.python.org/3/library/venv.html
     `TELEGRAM_TOKEN` - telegram token to work with the API
     `TG_CHAT_ID` - ID of your chat. It can be obtained by sending a message to the @userinfobot bot
 
+#### example:
+
+````
+TELEGRAM_TOKEN=1234567890:AAH6I2jaaaZZZ7PCtJaEPm5B-dM-******
+TG_CHAT_ID=1234567890
+DVMN_TOKEN=4985f388872e349d1d34ca76e8d8989899a9cf28
+TELEGRAM_LOGGER_TOKEN=1234567890:AAH6I2jaaaAAB7PCtJaEPm5B-dM-******
+````
+
 #### Run `main.py` to receive verification notifications in telegram:
 
 ```commandline
