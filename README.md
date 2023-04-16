@@ -35,12 +35,26 @@ python main.py
 
 ## Build Using Docker
 
-1. Build the image
+#### Added to `.env` file:
+    'DVMN_TOKEN' - Devman token to work with the API
+    `TELEGRAM_TOKEN` - telegram token to work with the API
+    `TG_CHAT_ID` - ID of your chat. It can be obtained by sending a message to the @userinfobot bot
+
+###### example:
+
+````
+TELEGRAM_TOKEN=1234567890:AAH6I2jaaaZZZ7PCtJaEPm5B-dM-******
+TG_CHAT_ID=1234567890
+DVMN_TOKEN=4985f388872e349d1d34ca76e8d8989899a9cf28
+TELEGRAM_LOGGER_TOKEN=1234567890:AAH6I2jaaaAAB7PCtJaEPm5B-dM-******
+````
+
+#### Build the image
 
 `docker build -t work_cheker_bot .`
 
 
-2. Create the container and run:
+#### Create the container and run:
 
 `docker run -dit work_cheker_bot `
 
